@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css'
 import Banner from './components/Banner'
 import EventForm from './components/EventForm'
@@ -9,38 +10,40 @@ function App() {
   const temas = [
     {
       id: 1,
-      nome: 'Front-End'
+      name: 'Front-End'
     },
     {
       id: 2,
-      nome: 'Back-End'
+      name: 'Back-End'
     },
     {
       id: 3,
-      nome: 'Devops'
+      name: 'Devops'
     },
     {
       id: 4,
-      nome: 'Inteligência Artificial'
+      name: 'Inteligência Artificial'
     },
     {
       id: 5,
-      nome: 'Data Science'
+      name: 'Data Science'
     },
     {
       id: 6,
-      nome: 'Cloud'
+      name: 'Cloud'
     }
   ];
 
-  const events = [
-    {
-      capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
-      tema: temas[0],
-      data: new Date(),
-      titulo: 'Mulheres no Front',
-    }
-  ]
+  const [events, setEvents] = useState([{
+    cover: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
+    theme: temas[0],
+    date: new Date(),
+    title: 'Mulheres no Front',
+  }]);
+
+  function addEvent(newEvent) {
+    setEvents([...events, newEvent]);
+  }
 
   return (
     <main>
@@ -48,11 +51,13 @@ function App() {
         <img src={'/logo.png'} alt="" />
       </header>
       <Banner src={'./banner.png'} />
-      <EventForm />
-      {temas.map(tema => (
-        <section key={tema.id}>
-          <Theme tema={tema} />
-          <EventCard event={events[0]} />
+      <EventForm themes={temas} onSubmit={addEvent} />
+      {temas.map(theme => (
+        <section key={theme.id}>
+          <Theme theme={theme} />
+          {events.map((event, index) => (
+            <EventCard key={index} event={event} />
+          ))}
         </section>
       ))}
     </main>

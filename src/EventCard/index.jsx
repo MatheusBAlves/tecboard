@@ -3,14 +3,14 @@ import './EventCard.css';
 export default function EventCard({ event }) {
   return (
     <div className='card-event'>
-      <img src={event.capa} alt={event.titulo} />
+      <img src={event.cover} alt={event.title} />
       <div className="body">
         <p className="tag">
-          {event.tema.nome}
+          {event.theme.name}
         </p>
-        <p>{event.data.toLocaleDateString()}</p>
-        <h4 className="titulo">
-          {event.titulo}
+        <p className='date'>{event.date.toLocaleDateString()}</p>
+        <h4 className="title">
+          {event.title}
         </h4>
       </div>
     </div>
