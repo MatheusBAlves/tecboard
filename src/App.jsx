@@ -52,14 +52,21 @@ function App() {
       </header>
       <Banner src={'./banner.png'} />
       <EventForm themes={temas} onSubmit={addEvent} />
-      {temas.map(theme => (
-        <section key={theme.id}>
-          <Theme theme={theme} />
-          {events.map((event, index) => (
-            <EventCard key={index} event={event} />
-          ))}
-        </section>
-      ))}
+      <section className="container">
+        {temas.map(theme => {
+          if (!events.some(event => (event.theme.id === theme.id))) return null;
+          return (
+            <section key={theme.id}>
+              <Theme theme={theme} />
+              <div className="events">
+                {events.filter(event => event.theme.id === theme.id).map((event, index) => (
+                  <EventCard key={index} event={event} />
+                ))}
+              </div>
+            </section>
+          )
+        })}
+      </section>
     </main>
   )
 }
